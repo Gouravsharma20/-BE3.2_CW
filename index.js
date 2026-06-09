@@ -27,7 +27,18 @@ app.get("/cars",(req,res)=>{
     res.send(cars)
 })
 
-const PORT = 3005
+app.delete("/cars/:id",(req,res)=>{
+    const carId = req.params.id
+    const index = cars.findIndex((car)=>car.id == carId)
+    if(index === -1) {
+        res.status(404).json({error:"Car not found"})
+    } else {
+        cars.splice(index,1)
+        res.status(200).json({message:"item deleted successfully!"})
+    }
+})
+
+const PORT = 3006
 
 app.listen(PORT , ()=>{
     console.log(`Server is running at port ${PORT}`)
